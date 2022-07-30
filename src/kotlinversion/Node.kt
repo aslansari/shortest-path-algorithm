@@ -13,18 +13,37 @@ class Node(var data: Int) {
         n.following = end
     }
 
-    // TODO:: Implement to return the length of the SinglyLinkedList
-    // For example:: --> 5 --> 6 --> 7 --> 3 --> .
-    fun printNodes() {}
-
-    // TODO:: Implement to return the length of the SinglyLinkedList
-    fun length(h: Node?): Int {
-        return 0
+    /**
+     * print example:: --> 5 --> 6 --> 7 --> 3 --> .
+     */
+    fun printNodes() {
+        print(" --> ")
+        print(data)
+        if (following != null) {
+            following?.printNodes()
+        } else {
+            print(" --> .")
+        }
     }
 
-    // TODO:: Implement to return the sum of the Nodes
+    /**
+     * @return the length of the SinglyLinkedList
+     */
+    fun length(h: Node?): Int {
+        var count = 1
+        var node: Node? = h
+        while (node != null) {
+            count++
+            node = node.following
+        }
+        return count
+    }
+
+    /**
+     * @return the sum of the Nodes
+     */
     fun sumOfNodes(): Int {
-        return 0
+        return data + (following?.sumOfNodes() ?: 0)
     }
 
     fun deleteNode(head: Node, data: Int): Node? {
@@ -33,8 +52,13 @@ class Node(var data: Int) {
         if(n.data == data) {
             return head.following
         }
-        // TODO:: Implement the proper loop in order to remove given data
-
+        var nextNode: Node? = n
+        do {
+            if (nextNode?.following?.data == data) {
+                nextNode.following = nextNode.following?.following
+            }
+            nextNode = nextNode?.following
+        } while (nextNode != null)
         //
         return head
     }
